@@ -32,6 +32,10 @@
       <input type="text" id="taskInput" class="form-control" placeholder="Add a new task">
       <button class="btn btn-primary" onclick="addTask()">Add</button>
     </div>
+    <div class="d-flex justify-content-between mb-3">
+      <button class="btn btn-success" onclick="markAllCompleted()">Mark All as Completed</button>
+      <button class="btn btn-danger" onclick="deleteAllTasks()">Delete All</button>
+    </div>
     <ul class="list-group" id="taskList"></ul>
   </div>
 
@@ -92,6 +96,20 @@
       const newText = prompt("Edit your task:", tasks[index].text);
       if (newText !== null && newText.trim() !== "") {
         tasks[index].text = newText.trim();
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function markAllCompleted() {
+      tasks = tasks.map(task => ({ ...task, completed: true }));
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteAllTasks() {
+      if (confirm("Are you sure you want to delete all tasks?")) {
+        tasks = [];
         saveTasks();
         renderTasks();
       }
